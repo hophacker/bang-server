@@ -1,8 +1,10 @@
 from twisted.internet.protocol import Factory
 from twisted.protocols.basic import LineReceiver
 from twisted.internet import reactor
+from twisted.enterprise import adbapi
 
 
+dbpool = adbapi.ConnectionPool("MySQLdb", db = "bang");
 class ChatProtocol(LineReceiver):
     def __init__(self, factory):
         self.factory = factory
