@@ -1,0 +1,7 @@
+obj/
+*.swp
+debug
+open.sh
+error
+tags
+README1.md
