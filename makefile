@@ -1,12 +1,13 @@
 vpath %.cpp .
 CC=g++
 CFLAGS=-g
+obj_dir=cgi-bin
 
 _TAR = hello
 _OBJ = $(patsubst %,%.o,$(_TAR)) 
 
-TAR = $(patsubst %,obj/%,$(_TAR))
-OBJ = $(patsubst %,obj/%,$(_OBJ))
+TAR = $(patsubst %,$(obj_dir)/%,$(_TAR))
+OBJ = $(patsubst %,$(obj_dir)/%,$(_OBJ))
 
 .PHONY: all clean print test debug
 
@@ -16,23 +17,23 @@ print:
 	echo $(OBJ) $(TAR)
 
 debug:
-	./obj/hello
+	./$(obj_dir)/hello
 test:
-	./obj/hello 2>error
+	./$(obj_dir)/hello 2>error
 
 $(TAR):$(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 	
-$(OBJ): | obj
+$(OBJ): | $(obj_dir)
 
-obj:
+$(obj_dir):
 	@mkdir -p $@
 
-obj/%.o : %.cpp %.h
+$(obj_dir)/%.o : %.cpp %.h
 	@echo $<
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 
 .PHONY : clean
 clean:
-	rm -rf *.o obj/ 
+	rm -rf *.o $(obj_dir)/ 
